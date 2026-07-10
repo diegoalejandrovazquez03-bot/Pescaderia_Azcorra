@@ -14,10 +14,12 @@ namespace PescaderiaApi.Controllers
     public class OrdersController : ControllerBase
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
 
-        public OrdersController(IOrderRepository orderRepository)
+        public OrdersController(IOrderRepository orderRepository, IUserRepository userRepository)
         {
             _orderRepository = orderRepository;
+            _userRepository = userRepository;
         }
 
         // GET: api/orders
@@ -25,6 +27,17 @@ namespace PescaderiaApi.Controllers
         public async Task<ActionResult<IEnumerable<Order>>> GetAll()
         {
             var orders = await _orderRepository.GetAllAsync();
+            foreach(var order in orders)
+            {
+                if (!string.IsNullOrEmpty(order.UserId))
+                {
+                    var user = await _userRepository.GetByIdAsync(order.UserId);
+                    if (user != null)
+                    {
+                        order.CustomerName = user.Name;
+                    }
+                }
+            }
             return Ok(orders);
         }
 
@@ -53,6 +66,15 @@ namespace PescaderiaApi.Controllers
         public async Task<ActionResult<Order>> Create([FromBody] Order order)
         {
             if (order == null) return BadRequest();
+
+            if (!string.IsNullOrEmpty(order.UserId))
+            {
+                var user = await _userRepository.GetByIdAsync(order.UserId);
+                if (user != null)
+                {
+                    order.CustomerName = user.Name;
+                }
+            }
 
             await _orderRepository.AddAsync(order);
             return CreatedAtAction(nameof(GetById), new { id = order.Id }, order);
