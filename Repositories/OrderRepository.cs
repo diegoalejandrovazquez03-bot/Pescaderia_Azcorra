@@ -89,7 +89,19 @@ namespace PescaderiaApi.Repositories
             {
                 if (string.IsNullOrEmpty(order.Id))
                 {
-                    order.Id = $"ORD-2026-{(_orders.Count + 1):D3}";
+                    int orderNumber = (_orders.Count % 299) + 1;
+                    if (string.IsNullOrEmpty(order.UserId))
+                    {
+                        order.Id = $"INV-2026-{orderNumber:D3}";
+                        if (string.IsNullOrEmpty(order.CustomerName))
+                        {
+                            order.CustomerName = "Invitado";
+                        }
+                    }
+                    else
+                    {
+                        order.Id = $"ORD-2026-{orderNumber:D3}";
+                    }
                 }
                 order.Date = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss");
                 _orders.Add(order);
