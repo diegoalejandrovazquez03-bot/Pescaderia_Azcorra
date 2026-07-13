@@ -9,8 +9,8 @@ builder.Services.AddControllers();
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowReactApp",
-        policy => policy.AllowAnyOrigin()
+    options.AddPolicy("AllowGitHubPages",
+        policy => policy.WithOrigins("https://diegoalejandrovazquez03-bot.github.io")
                         .AllowAnyMethod()
                         .AllowAnyHeader());
 });
@@ -31,7 +31,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
 }
 
-app.UseCors("AllowReactApp");
+app.UseCors("AllowGitHubPages");
 
 app.UseHttpsRedirection();
 

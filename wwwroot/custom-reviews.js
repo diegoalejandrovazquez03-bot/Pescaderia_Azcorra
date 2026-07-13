@@ -29,7 +29,8 @@
     ratingHeader.dataset.reviewsInjected = "true";
 
     // Build the interactive stars
-    fetch(`/api/products/${productId}/reviews`)
+    const apiBase = window.API_BASE_URL || '';
+    fetch(apiBase + `/api/products/${productId}/reviews`)
       .then(res => res.json())
       .then(reviews => {
         let avgRating = 5;
@@ -277,7 +278,8 @@
               date: new Date().toISOString().split('T')[0]
           };
           
-          fetch(`/api/products/${productId}/reviews`, {
+          const apiBase = window.API_BASE_URL || '';
+          fetch(apiBase + `/api/products/${productId}/reviews`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify(reviewData)

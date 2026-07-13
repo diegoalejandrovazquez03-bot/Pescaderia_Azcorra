@@ -25,7 +25,8 @@
     // Mostrar estado de carga
     listContainer.innerHTML = '<p class="text-stone-500 italic p-4 text-center">Cargando pedidos en tiempo real...</p>';
 
-    fetch('/api/orders')
+    const apiBase = window.API_BASE_URL || '';
+    fetch(apiBase + '/api/orders')
       .then(res => res.json())
       .then(orders => {
          listContainer.innerHTML = '';
@@ -207,7 +208,8 @@
               deliverBtn.disabled = true;
               deliverBtn.innerHTML = "Actualizando...";
               
-              fetch('/api/orders/' + order.id + '/status', {
+              const apiBase = window.API_BASE_URL || '';
+              fetch(apiBase + '/api/orders/' + order.id + '/status', {
                   method: 'PUT',
                   headers: { 'Content-Type': 'application/json' },
                   body: JSON.stringify({ status: 'delivered' })

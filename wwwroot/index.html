@@ -10,6 +10,11 @@
       <meta name="robots" content="noindex, nofollow" />
       <style>html, body { height: 100%; margin: 0; } #root { height: 100%; }</style>
       
+      <script>
+        window.API_BASE_URL = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
+          ? 'http://localhost:5002'
+          : 'https://diegoalejandrovazquez03-bot-github-io.onrender.com';
+      </script>
       <script type="module" crossorigin src="./assets/index-DLv6H60J.js?v=13"></script>
       <link rel="stylesheet" crossorigin href="./assets/index-D3-5MNB2.css?v=13">
       <script src="./custom-reviews.js" defer></script>
