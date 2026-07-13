@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: pescaderia-api
+    env: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
